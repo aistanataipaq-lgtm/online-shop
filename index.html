@@ -3,74 +3,64 @@
 <html lang="kk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>QAZAQ SHOP</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f7f7f5;color:#202020}
-header{background:#fff;padding:17px 16px;position:sticky;top:0;z-index:5;border-bottom:1px solid #eee}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.logo{font-size:23px;font-weight:800;letter-spacing:1px}
-.small{font-size:12px;color:#777;margin-top:5px}
-button,a{cursor:pointer}
-button{border:0;border-radius:10px;padding:11px 14px;font-weight:bold}
-.whatsapp{background:#168b55;color:white;text-decoration:none;padding:12px;border-radius:10px;display:inline-block}
-.hero{padding:28px 18px;background:#e9eee7;margin:14px;border-radius:18px}
-.hero h1{font-size:29px;margin:0 0 10px}
-.hero p{line-height:1.5;color:#555}
-main{padding:0 14px 30px}
-.tools{display:flex;gap:8px;margin:18px 0}
-input,select,textarea{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;font:inherit;background:white}
-.tools input{min-width:0}
+body{margin:0;background:#f7f7f5;color:#222;font-family:Arial,sans-serif}
+header{position:sticky;top:0;background:white;padding:18px 15px;border-bottom:1px solid #eee;z-index:5}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.logo{font-size:24px;font-weight:800}
+button{border:0;border-radius:10px;padding:13px;cursor:pointer;font-size:15px}
+.cartbtn,.add{background:#222;color:white}
+main{max-width:950px;margin:auto;padding:14px}
+.hero{background:#e9eee7;border-radius:17px;padding:24px 18px;margin-bottom:22px}
+.hero h1{font-size:28px;margin-top:0}
+.hero p{line-height:1.5}
+.whatsapp{display:inline-block;background:#168b55;color:white;text-decoration:none;padding:13px;border-radius:10px}
+.tools{display:flex;gap:8px;margin:15px 0}
+input,select,textarea{width:100%;min-width:0;padding:13px;border:1px solid #ddd;border-radius:10px;font:inherit;background:white}
 .tools select{width:125px}
-h2{font-size:21px}
 .products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:white;border-radius:14px;overflow:hidden;border:1px solid #eee}
-.card img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#eee}
+.card{background:white;border:1px solid #eee;border-radius:14px;overflow:hidden}
+.card img{width:100%;aspect-ratio:1/1;object-fit:contain;background:white}
 .info{padding:11px}
-.name{font-weight:bold;line-height:1.35;min-height:36px}
-.price{font-size:18px;font-weight:bold;margin:9px 0}
-.add{background:#202020;color:white;width:100%}
-.section{background:white;border-radius:15px;padding:15px;margin-top:20px}
-.cart-item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid #eee}
-.qty{display:flex;align-items:center;gap:8px}
-.qty button,.remove{background:#eee;padding:8px}
-.total{font-size:21px;font-weight:bold;margin:16px 0}
-form{display:grid;gap:11px}
-form label{font-size:13px;color:#555}
+.name{font-weight:bold;line-height:1.4;min-height:38px}
+.price{font-size:18px;font-weight:bold;margin:10px 0}
+.add{width:100%}
+.section{background:white;padding:16px;border-radius:15px;margin-top:22px}
+.cartitem{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid #eee}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{padding:8px;background:#eee}
+.total{font-size:21px;font-weight:bold;margin:18px 0}
+form{display:grid;gap:12px}
+label{font-size:14px;color:#555}
 .field{display:grid;gap:6px}
-.send{background:#168b55;color:white;font-size:16px;padding:15px}
-footer{text-align:center;color:#777;font-size:13px;padding:25px 12px}
-.empty{color:#777;font-size:14px}
-@media(min-width:650px){
-main{max-width:950px;margin:auto}
-.products{grid-template-columns:repeat(3,minmax(0,1fr))}
-.hero{max-width:920px;margin:20px auto}
-}
+.send{background:#168b55;color:white;padding:16px;font-weight:bold}
+.small{font-size:13px;color:#777;line-height:1.5}
+footer{text-align:center;color:#777;padding:25px}
+@media(min-width:650px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
 <body>
 
 <header>
   <div class="top">
-    <div>
-      <div class="logo">QAZAQ SHOP</div>
-      <div class="small">Онлайн дүкен • Онлайн-заказы</div>
-    </div>
-    <button onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">
-      🛒 Себет <span id="cartCount">0</span>
+    <div class="logo">QAZAQ SHOP</div>
+    <button class="cartbtn" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">
+      🛒 Себет <span id="count">0</span>
     </button>
   </div>
 </header>
 
-<section class="hero">
-  <h1>Қош келдіңіз!</h1>
-  <p>Өзіңізге ұнаған тауарды таңдаңыз. Тапсырысты сайттан рәсімдеп, WhatsApp арқылы жіберіңіз.</p>
-  <a class="whatsapp" id="shopContact" href="#" target="_blank">💬 Дүкенге жазу</a>
-</section>
-
 <main>
-  <h2>Біздің тауарлар</h2>
+  <section class="hero">
+    <h1>Қош келдіңіз!</h1>
+    <p>Өзіңізге ұнаған тауарды таңдаңыз. Тапсырысыңызды онлайн рәсімдеңіз.</p>
+    <a class="whatsapp" id="contact" target="_blank" rel="noopener">💬 Дүкенге WhatsApp арқылы жазу</a>
+  </section>
+
+  <h2>Тауарлар каталогы</h2>
   <div class="tools">
     <input id="search" placeholder="🔎 Тауар іздеу..." oninput="renderProducts()">
     <select id="sort" onchange="renderProducts()">
@@ -84,9 +74,9 @@ main{max-width:950px;margin:auto}
 
   <section class="section" id="cart">
     <h2>🛒 Себет</h2>
-    <div id="cartItems"><p class="empty">Себет әзірге бос.</p></div>
+    <div id="cartItems"><p>Себет әзірге бос.</p></div>
     <div class="total">Жалпы: <span id="total">0</span> ₸</div>
-    <button onclick="clearCart()" style="background:#eee">Себетті тазалау</button>
+    <button onclick="clearCart()">Себетті тазалау</button>
   </section>
 
   <section class="section" id="checkout">
@@ -96,217 +86,193 @@ main{max-width:950px;margin:auto}
         <label for="customerName">Клиенттің аты-жөні *</label>
         <input id="customerName" required placeholder="Аты-жөніңіз">
       </div>
-
       <div class="field">
         <label for="customerPhone">Клиенттің телефон нөмірі *</label>
-        <input id="customerPhone" type="tel" required
-          placeholder="+7 777 123 45 67">
+        <input id="customerPhone" type="tel" required placeholder="+7 707 123 45 67">
       </div>
-
       <div class="field">
-        <label for="city">Қала *</label>
+        <label for="city">Қала немесе елді мекен *</label>
         <input id="city" required placeholder="Мысалы, Орал">
       </div>
-
       <div class="field">
-        <label for="address">Мекенжай *</label>
-        <input id="address" required placeholder="Көше, үй, пәтер">
+        <label for="street">Көше, үй нөмірі *</label>
+        <input id="street" required placeholder="Көше, үй">
       </div>
-
       <div class="field">
-        <label for="comment">Қосымша түсініктеме</label>
-        <textarea id="comment" rows="3"
-          placeholder="Тапсырыс туралы қосымша ақпарат"></textarea>
+        <label for="apartment">Пәтер нөмірі</label>
+        <input id="apartment" placeholder="Пәтер нөмірі">
       </div>
-
-      <button class="send" type="submit">
-        WhatsApp арқылы тапсырыс беру
-      </button>
-      <p class="small">Тапсырыс WhatsApp-та ашылады. Жіберу үшін WhatsApp ішіндегі Send батырмасын басыңыз.</p>
+      <div class="field">
+        <label for="comment">Тапсырысқа ескерту</label>
+        <textarea id="comment" rows="3" placeholder="Қосымша ақпарат (міндетті емес)"></textarea>
+      </div>
+      <button class="send" type="submit">WhatsApp арқылы тапсырыс беру</button>
+      <p class="small">Батырманы басқанда WhatsApp-та дайын тапсырыс ашылады. Хабарламаны жіберуді өзіңіз растайсыз.</p>
     </form>
   </section>
 </main>
 
-<footer>
-  © <span id="year"></span> QAZAQ SHOP<br>
-  Барлық құқықтар қорғалған.
-</footer>
+<footer>© <span id="year"></span> QAZAQ SHOP</footer>
 
 <script>
-/* ДҮКЕННІҢ НӨМІРІН ОСЫ ЖЕРДЕН ӨЗГЕРТІҢІЗ.
-   + белгісінсіз, бос орынсыз, ел кодымен жазыңыз. */
+/* ДҮКЕННІҢ WHATSAPP НӨМІРІ */
 const WHATSAPP = "77072161570";
 
-/* ТАУАРЛАР: атауын, бағасын және фотосын өзгертуге болады. */
+/* ТАУАРЛАР ТІЗІМІ */
 const products = [
   {
-    id: 1,
-    name: "Қара хиджаб",
-    price: 4500,
-    image: "https://placehold.co/500x500/f0eee8/222?text=Hijab"
+    id:1,
+    name:"Қара хиджаб",
+    price:4500,
+    image:"https://placehold.co/500x500/f0eee8/222?text=Hijab"
   },
   {
-    id: 2,
-    name: "Ақ хиджаб",
-    price: 4500,
-    image: "https://placehold.co/500x500/f5f5f5/222?text=White+Hijab"
+    id:2,
+    name:"Ақ хиджаб",
+    price:4500,
+    image:"https://placehold.co/500x500/f5f5f5/222?text=White+Hijab"
   },
   {
-    id: 3,
-    name: "Бежевый хиджаб",
-    price: 5000,
-    image: "https://placehold.co/500x500/e8dfd3/222?text=Beige+Hijab"
+    id:3,
+    name:"Бежевый хиджаб",
+    price:5000,
+    image:"https://placehold.co/500x500/e8dfd3/222?text=Beige+Hijab"
   },
   {
-    id: 4,
-    name: "Күнделікті орамал",
-    price: 3500,
-    image: "https://placehold.co/500x500/e4e8ed/222?text=Scarf"
+    id:4,
+    name:"Күнделікті орамал",
+    price:3500,
+    image:"https://placehold.co/500x500/e4e8ed/222?text=Scarf"
+  },
+  {
+    id:5,
+    name:"Kärcher шаңсорғыш",
+    price:56000,
+    image:"https://aistanataipaq-lgtm.github.io/online-shop/Screenshot_20261004_140641_Wildberries.jpg"
   }
 ];
 
 let cart = [];
 
-const money = n => n.toLocaleString("ru-RU");
-
-function renderProducts() {
-  const query = document.getElementById("search").value
-    .trim().toLowerCase();
-
-  let list = products.filter(p =>
-    p.name.toLowerCase().includes(query)
-  );
-
-  const sort = document.getElementById("sort").value;
-  if (sort === "low") list.sort((a,b) => a.price-b.price);
-  if (sort === "high") list.sort((a,b) => b.price-a.price);
-
-  document.getElementById("products").innerHTML =
-    list.length ? list.map(p => `
-      <article class="card">
-        <img src="${p.image}" alt="${p.name}" loading="lazy"
-          onerror="this.src='https://placehold.co/500x500/f0eee8/222?text=QAZAQ+SHOP'">
-        <div class="info">
-          <div class="name">${p.name}</div>
-          <div class="price">${money(p.price)} ₸</div>
-          <button class="add" onclick="addToCart(${p.id})">
-            Себетке қосу
-          </button>
-        </div>
-      </article>
-    `).join("") : "<p>Тауар табылмады.</p>";
+function money(n){
+  return n.toLocaleString("ru-RU");
 }
 
-function addToCart(id) {
-  const found = cart.find(item => item.id === id);
-  if (found) found.qty++;
-  else cart.push({id, qty:1});
+function renderProducts(){
+  const q=document.getElementById("search").value.trim().toLowerCase();
+  let list=products.filter(p=>p.name.toLowerCase().includes(q));
+  const sort=document.getElementById("sort").value;
+  if(sort==="low") list.sort((a,b)=>a.price-b.price);
+  if(sort==="high") list.sort((a,b)=>b.price-a.price);
+
+  document.getElementById("products").innerHTML=list.map(p=>`
+    <article class="card">
+      <img src="${p.image}" alt="${p.name}" loading="lazy"
+        onerror="this.onerror=null;this.src='https://placehold.co/500x500/f0eee8/222?text=QAZAQ+SHOP'">
+      <div class="info">
+        <div class="name">${p.name}</div>
+        <div class="price">${money(p.price)} ₸</div>
+        <button class="add" onclick="addToCart(${p.id})">Себетке қосу</button>
+      </div>
+    </article>
+  `).join("");
+}
+
+function addToCart(id){
+  const item=cart.find(x=>x.id===id);
+  if(item)item.qty++;
+  else cart.push({id,qty:1});
   renderCart();
 }
 
-function changeQty(id, amount) {
-  const item = cart.find(x => x.id === id);
-  if (!item) return;
-  item.qty += amount;
-  cart = cart.filter(x => x.qty > 0);
+function changeQty(id,n){
+  const item=cart.find(x=>x.id===id);
+  if(!item)return;
+  item.qty+=n;
+  cart=cart.filter(x=>x.qty>0);
   renderCart();
 }
 
-function removeItem(id) {
-  cart = cart.filter(x => x.id !== id);
+function removeItem(id){
+  cart=cart.filter(x=>x.id!==id);
   renderCart();
 }
 
-function clearCart() {
-  cart = [];
+function clearCart(){
+  cart=[];
   renderCart();
 }
 
-function renderCart() {
-  const container = document.getElementById("cartItems");
-  const count = cart.reduce((sum, item) => sum + item.qty, 0);
-  const total = cart.reduce((sum, item) => {
-    const p = products.find(x => x.id === item.id);
-    return sum + (p ? p.price * item.qty : 0);
-  }, 0);
+function renderCart(){
+  const count=cart.reduce((s,x)=>s+x.qty,0);
+  const total=cart.reduce((s,x)=>{
+    const p=products.find(p=>p.id===x.id);
+    return s+(p?p.price*x.qty:0);
+  },0);
 
-  document.getElementById("cartCount").textContent = count;
-  document.getElementById("total").textContent = money(total);
+  document.getElementById("count").textContent=count;
+  document.getElementById("total").textContent=money(total);
 
-  if (!cart.length) {
-    container.innerHTML = '<p class="empty">Себет әзірге бос.</p>';
+  if(!cart.length){
+    document.getElementById("cartItems").innerHTML="<p>Себет әзірге бос.</p>";
     return;
   }
 
-  container.innerHTML = cart.map(item => {
-    const p = products.find(x => x.id === item.id);
-    if (!p) return "";
-    return `
-      <div class="cart-item">
-        <div>
-          <strong>${p.name}</strong>
-          <div class="small">${money(p.price)} ₸</div>
-        </div>
-        <div class="qty">
-          <button onclick="changeQty(${p.id},-1)">−</button>
-          <span>${item.qty}</span>
-          <button onclick="changeQty(${p.id},1)">+</button>
-          <button class="remove" onclick="removeItem(${p.id})">✕</button>
-        </div>
+  document.getElementById("cartItems").innerHTML=cart.map(x=>{
+    const p=products.find(p=>p.id===x.id);
+    return `<div class="cartitem">
+      <div><strong>${p.name}</strong><br>${money(p.price)} ₸</div>
+      <div class="qty">
+        <button type="button" onclick="changeQty(${p.id},-1)">−</button>
+        <span>${x.qty}</span>
+        <button type="button" onclick="changeQty(${p.id},1)">+</button>
+        <button type="button" onclick="removeItem(${p.id})">✕</button>
       </div>
-    `;
+    </div>`;
   }).join("");
 }
 
-document.getElementById("shopContact").href =
-  "https://wa.me/" + WHATSAPP;
+document.getElementById("contact").href="https://wa.me/"+WHATSAPP;
+document.getElementById("year").textContent=new Date().getFullYear();
 
-document.getElementById("year").textContent =
-  new Date().getFullYear();
-
-document.getElementById("orderForm").addEventListener("submit", function(e) {
+document.getElementById("orderForm").addEventListener("submit",function(e){
   e.preventDefault();
 
-  if (!cart.length) {
+  if(!cart.length){
     alert("Алдымен себетке тауар қосыңыз.");
     return;
   }
 
-  if (WHATSAPP === "77000000000") {
-    alert("Алдымен кодтағы WHATSAPP жолына дүкеннің нақты нөмірін жазыңыз.");
-    return;
-  }
+  const name=document.getElementById("customerName").value.trim();
+  const phone=document.getElementById("customerPhone").value.trim();
+  const city=document.getElementById("city").value.trim();
+  const street=document.getElementById("street").value.trim();
+  const apartment=document.getElementById("apartment").value.trim();
+  const comment=document.getElementById("comment").value.trim();
 
-  const name = document.getElementById("customerName").value.trim();
-  const phone = document.getElementById("customerPhone").value.trim();
-  const city = document.getElementById("city").value.trim();
-  const address = document.getElementById("address").value.trim();
-  const comment = document.getElementById("comment").value.trim();
+  const items=cart.map(x=>{
+    const p=products.find(p=>p.id===x.id);
+    return `${p.name} x ${x.qty} = ${money(p.price*x.qty)} ₸`;
+  }).join("\n");
 
-  const lines = cart.map(item => {
-    const p = products.find(x => x.id === item.id);
-    return `${p.name} × ${item.qty} = ${money(p.price * item.qty)} ₸`;
-  });
+  const total=cart.reduce((s,x)=>{
+    const p=products.find(p=>p.id===x.id);
+    return s+p.price*x.qty;
+  },0);
 
-  const total = cart.reduce((sum, item) => {
-    const p = products.find(x => x.id === item.id);
-    return sum + p.price * item.qty;
-  }, 0);
+  const message=
+    "🛍️ QAZAQ SHOP — ЖАҢА ТАПСЫРЫС\n\n"+
+    "Клиент: "+name+"\n"+
+    "Телефон: "+phone+"\n"+
+    "Қала: "+city+"\n"+
+    "Көше, үй: "+street+"\n"+
+    "Пәтер: "+(apartment||"Көрсетілмеген")+"\n\n"+
+    "ТАУАРЛАР:\n"+items+"\n\n"+
+    "ЖАЛПЫ: "+money(total)+" ₸\n"+
+    "Ескерту: "+(comment||"Жоқ");
 
-  const message =
-    "🛍️ ЖАҢА ТАПСЫРЫС — QAZAQ SHOP\n\n" +
-    "Клиент: " + name + "\n" +
-    "Клиент телефоны: " + phone + "\n" +
-    "Қала: " + city + "\n" +
-    "Мекенжай: " + address + "\n\n" +
-    "ТАУАРЛАР:\n" + lines.join("\n") + "\n\n" +
-    "ЖАЛПЫ СОММА: " + money(total) + " ₸\n" +
-    "Түсініктеме: " + (comment || "Жоқ");
-
-  const url = "https://wa.me/" + WHATSAPP +
-    "?text=" + encodeURIComponent(message);
-
-  window.open(url, "_blank");
+  const url="https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message);
+  window.location.href=url;
 });
 
 renderProducts();
