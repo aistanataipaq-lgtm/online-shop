@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QAZAQ SHOP</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f7f7f7;color:#222}
+header{background:#fff;padding:18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;border-bottom:1px solid #ddd}
+h1{font-size:21px;margin:0}
+button{background:#171717;color:white;border:0;border-radius:9px;padding:12px;cursor:pointer}
+main{max-width:850px;margin:auto;padding:16px}
+.hero{background:#e8eee6;padding:24px;border-radius:15px;margin-bottom:18px}
+.hero h2{font-size:27px;margin:0 0 8px}
+input,select{width:100%;padding:13px;border:1px solid #ddd;border-radius:9px;font-size:16px;background:#fff}
+.filters{display:flex;gap:8px;margin-bottom:18px}
+.filters input{flex:2;min-width:0}
+.filters select{flex:1;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;padding:10px;border-radius:13px}
+.card img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px}
+.card h3{font-size:15px}
+.price{font-weight:bold;margin:12px 0}
+.card button{width:100%}
+.panel{background:#fff;padding:16px;margin-top:22px;border-radius:13px}
+.line{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:14px 0}
+footer{text-align:center;padding:25px;color:#777}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header>
+<h1>QAZAQ SHOP</h1>
+<button onclick="document.getElementById('cart').scrollIntoView()">Себет 🛒 <span id="count">0</span></button>
+</header>
+
+<main>
+<section class="hero">
+<h2>Өзіңе керектің бәрі</h2>
+<p>Таңда. Тапсырыс бер. Қуана қолдан!</p>
+</section>
+
+<div class="filters">
+<input id="search" placeholder="Тауар іздеу..." oninput="render()">
+<select id="sort" onchange="render()">
+<option value="default">Сұрыптау</option>
+<option value="low">Арзаны</option>
+<option value="high">Қымбаты</option>
+</select>
+</div>
+
+<div class="grid" id="products"></div>
+
+<section class="panel" id="cart">
+<h2>🛒 Себет</h2>
+<div id="items"></div>
+<div class="line"><b>Жалпы:</b><b id="total">0 ₸</b></div>
+<h3>Тапсырыс деректері</h3>
+<input id="customer" placeholder="Атыңыз">
+<br><br>
+<input id="phone" placeholder="Телефон нөміріңіз" type="tel">
+<br><br>
+<input id="address" placeholder="Жеткізу мекенжайы">
+<br><br>
+<button onclick="order()">WhatsApp арқылы тапсырыс беру</button>
+<p id="notice"></p>
+</section>
+</main>
+
+<footer>© 2026 QAZAQ SHOP</footer>
+
+<script>
+const WHATSAPP = "77000000000"; 
+// Жоғарыдағы нөмірді өз WhatsApp нөміріңмен ауыстыр.
+
+const products = [
+{id:1,name:"Әдемі сөмке",price:6500,
+image:"https://placehold.co/500x500/f0eee8/222?text=Bag"},
+{id:2,name:"Әйелдер аксессуары",price:3500,
+image:"https://placehold.co/500x500/e8edf2/222?text=Style"},
+{id:3,name:"Үйге арналған тауар",price:5000,
+image:"https://placehold.co/500x500/e8eee5/222?text=Home"},
+{id:4,name:"Сыйлық жиынтығы",price:8500,
+image:"https://placehold.co/500x500/f2e8e8/222?text=Gift"}
+];
+
+let cart={};
+try{
+cart=JSON.parse(localStorage.getItem("qazaq-cart")||"{}");
+}catch(e){cart={};}
+
+const money=n=>n.toLocaleString("ru-RU")+" ₸";
+
+function save(){
+localStorage.setItem("qazaq-cart",JSON.stringify(cart));
+}
+
+function render(){
+let list=[...products];
+let q=document.getElementById("search").value.toLowerCase();
+list=list.filter(p=>p.name.toLowerCase().includes(q));
+let s=document.getElementById("sort").value;
+if(s==="low")list.sort((a,b)=>a.price-b.price);
+if(s==="high")list.sort((a,b)=>b.price-a.price);
+
+document.getElementById("products").innerHTML=list.map(p=>`
+<div class="card">
+<img src="${p.image}" alt="${p.name}">
+<h3>${p.name}</h3>
+<div class="price">${money(p.price)}</div>
+<button onclick="add(${p.id})">Себетке қосу</button>
+</div>`).join("")||"<p>Тауар табылмады.</p>";
+
+drawCart();
+}
+
+function add(id){
+cart[id]=(cart[id]||0)+1;
+save();
+drawCart();
+document.getElementById("notice").textContent="Тауар себетке қосылды!";
+}
+
+function change(id,n){
+cart[id]=(cart[id]||0)+n;
+if(cart[id]<=0)delete cart[id];
+save();
+drawCart();
+}
+
+function drawCart(){
+let list=products.filter(p=>cart[p.id]>0);
+document.getElementById("items").innerHTML=list.map(p=>`
+<div class="line">
+<span>${p.name}<br>${money(p.price)}</span>
+<span>
+<button onclick="change(${p.id},-1)">−</button>
+${cart[p.id]}
+<button onclick="change(${p.id},1)">+</button>
+</span>
+</div>`).join("")||"<p>Себет бос.</p>";
+
+let count=Object.values(cart).reduce((a,b)=>a+b,0);
+let total=products.reduce((s,p)=>s+p.price*(cart[p.id]||0),0);
+document.getElementById("count").textContent=count;
+document.getElementById("total").textContent=money(total);
+}
+
+function order(){
+let name=document.getElementById("customer").value.trim();
+let phone=document.getElementById("phone").value.trim();
+let address=document.getElementById("address").value.trim();
+let list=products.filter(p=>cart[p.id]>0);
+
+if(!list.length)return alert("Себетке тауар қосыңыз!");
+if(!name||!phone||!address)
+return alert("Барлық деректі толтырыңыз!");
+
+if(WHATSAPP==="77000000000")
+return alert("Кодтағы WHATSAPP нөмірін өз нөміріңізге ауыстырыңыз!");
+
+let total=products.reduce((s,p)=>s+p.price*(cart[p.id]||0),0);
+let details=list.map(p=>p.name+" x "+cart[p.id]+" = "+money(p.price*cart[p.id])).join("\n");
+let message="Жаңа тапсырыс\n"+details+"\nЖалпы: "+money(total)+"\nАты: "+name+"\nТелефон: "+phone+"\nМекенжай: "+address;
+
+window.open("https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message),"_blank");
+}
+
+render();
+</script>
+</body>
+</html>
