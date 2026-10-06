@@ -163,8 +163,7 @@ function renderProducts(){
      <div class="price">${money(p.price)}</div>
      <button class="primary" onclick="addToCart(${p.id})">Себетке қосу</button>
    </div>
- </article>`).join("")  "<p>Тауар табылмады.</p>";
-}
+ </article>`).join("") || "<p>Тауар табылмады.</p>";
 
 function addToCart(id){
  const p=products.find(x=>x.id===id);
